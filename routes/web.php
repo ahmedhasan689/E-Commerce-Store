@@ -3,7 +3,10 @@
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RatingsController;
+use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,38 +20,74 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'] );
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-// Start Categories Controller ...
-Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('categories.index');
-Route::get('/admin/categories/create',[CategoriesController::class, 'create'])->name('categories.create');
-Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('categories.store');
-Route::get('admin/categories/{id}', [CategoriesController::class, 'show'])->name('categories.show');
-Route::get('/admin/categories/{id}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
-Route::put('/admin/categories/{id}', [CategoriesController::class, 'update'])->name('categories.update');
-Route::delete('/admin/categories/{id}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
-    // Resource Route For Categories Controller ...
-    //Route::resource('/admin/categories', 'Admin\CategoriesController');
-// End Categories Controller ...
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->middleware(['admin', 'auth.type:user'])
+    ->group(function () {
+
+        // Start Categories Controller ...
+        Route::group([
+            'prefix' => '/categories',
+            'as' => 'categories.' // Like name ('categories.index/delete')
+        ], function () {
+            Route::get('/', [CategoriesController::class, 'index'])->name('index');
+            Route::get('/create', [CategoriesController::class, 'create'])->name('create')->middleware(['can:categories.create']);
+            Route::post('/', [CategoriesController::class, 'store'])->name('store');
+            Route::get('/{category}', [CategoriesController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [CategoriesController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CategoriesController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CategoriesController::class, 'destroy'])->name('destroy');
+            // Resource Route For Categories Controller ...
+            //Route::resource('/admin/categories', 'Admin\CategoriesController');
+        });
+        // End Categories Controller ...
+
+        // Start Product Controller ...
+        Route::group([
+            'prefix' => 'products',
+            'as' => 'products.'
+        ], function () {
+            // To SoftDeletes [ Trash, Restore, forceDelete Function ]
+            Route::get('/trash', [ProductsController::class, 'trash'])->name('trash');
+            Route::put('/trash/{id?}', [ProductsController::class, 'restore'])->name('restore');
+            Route::delete('/trash/{id?}', [ProductsController::class, 'forceDelete'])->name('force-delete');
+            // Here Is Basics functions In Resources File ( ProductsController )
+            Route::get('/', [ProductsController::class, 'index'])->name('index');
+            Route::get('/create', [ProductsController::class, 'create'])->name('create');
+            Route::post('/', [ProductsController::class, 'store'])->name('store');
+            Route::get('/{id}', [ProductsController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [ProductsController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+        });
+        // End Products Controller
+
+        // Start Role Controller ...
+        Route::resource('/roles', 'Admin\RolesController')->middleware(['auth']);
+        // End Role Controller
+
+        // Get User 
+        Route::get('/get-user', [HomeController::class, 'getUser']);
+
+        // Start Country Route
+        Route::resource('/countries', 'Admin\CountriesController');
+        // End Country Route
+
+        // Start Profile Route
+        Route::get('/profiles/{profiles}', [ProfilesController::class, 'show']);
+        // End Profile Route
+
+    });
 
 
-// Start Product Controller ...
-    // To SoftDeletes [ Trash, Restore, forceDelete Function ]
-Route::get('/admin/products/trash', [ProductsController::class, 'trash'])->name('products.trash');
-Route::put('/admin/products/trash/{id?}', [ProductsController::class, 'restore'])->name('products.restore');
-Route::delete('/admin/products/trash/{id?}', [ProductsController::class, 'forceDelete'])->name('products.force-delete');
-    // Here Is Basics functions In Resources File ( ProductsController )
-Route::get('/admin/products', [ProductsController::class, 'index'])->middleware('auth')->name('products.index');
-Route::get('/admin/products/create',[ProductsController::class, 'create'])->middleware('auth')->name('products.create');
-Route::post('/admin/products', [ProductsController::class, 'store'])->middleware('auth')->name('products.store');
-Route::get('admin/products/{id}', [ProductsController::class, 'show'])->middleware('auth')->name('products.show');
-Route::get('/admin/products/{id}/edit', [ProductsController::class, 'edit'])->middleware('auth')->name('products.edit');
-Route::put('/admin/products/{id}', [ProductsController::class, 'update'])->middleware('auth')->name('products.update');
-Route::delete('/admin/products/{id}', [ProductsController::class, 'destroy'])->middleware(['auth'])->name('products.destroy');
-// End Products Controller
+
+// Start Rating Route (Rating Model)  
+Route::post('ratings/{type}', [RatingsController::class, 'store'])->where('type', 'profile|product');

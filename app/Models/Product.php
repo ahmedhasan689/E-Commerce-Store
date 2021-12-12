@@ -91,4 +91,27 @@ class Product extends Model
         $this->attributes['name'] = Str::title($value);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id')->withDefault([
+            'name' => 'Nothing',
+        ]);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
+    }
+
+    public function ratings()
+    {
+        return $this->morphMany(
+            Rating::class, // Related
+            'rateable', // Name Of Column That Have a Morph Relation
+            'rateable_type', // Morph type
+            'rateable_id', // Morph ID
+            'id'
+        );
+    }
+
 }

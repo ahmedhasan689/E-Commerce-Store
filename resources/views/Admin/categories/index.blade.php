@@ -16,6 +16,8 @@
 
 @section('content')
 
+    {{ trans_choice('app.categories_count', $categories->count(), ['number' => $categories->count()]) }}
+
     @if ($success)
     <div class="alert alert-danger">
         {{ $success }}
@@ -26,12 +28,13 @@
         <thead>
             <tr>
                 <th>NO. Loop</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Parent ID</th>
-                <th>Status</th>
-                <th>Created At</th>
+                <th>{{ __('ID') }}</th>
+                <th>{{ trans('Name') }}</th>
+                <th>{{ Lang::get('Slug') }}</th>
+                <th>@lang('Parent ID')</th>
+                <th>{{ __('Parent Count') }}</th>
+                <th>{{ __('Status') }}</th>
+                <th>{{ __('Created At') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -42,22 +45,24 @@
                 <td>{{ $category->original_name }}</td>
                 <td>{{ $category->slug }}</td>
                 <td>{{ $category->parent_name }}</td>
+                <td>{{ $category->products_count }}</td>
                 <td>{{ $category->status }}</td>
                 <td>{{ $category->created_at }}</td>
                 <td>
                     <a href="{{ route('categories.edit', ['id' => $category->id]) }}">
-                        <button type="submit" class="btn btn-sm btn-success">Edit</button>
+                        <button type="submit" class="btn btn-sm btn-success">{{ __('app.Edit')}}</button>
                     </a>                    
                 </td>
                 <td>
                     <form action="{{ route('categories.destroy', $category->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-danger">{{ __('app.Delete')}}</button>
                     </form>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $categories->links() }}
 @endsection

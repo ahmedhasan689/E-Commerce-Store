@@ -30,7 +30,7 @@ class CategoriesController extends Controller
         */
 
         // SELECT * FROM categories WHERE status = 'acitve'
-        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id' )
+        /* $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id' )
         ->select([
             'categories.*',
             'parents.name as parent_name',
@@ -38,7 +38,10 @@ class CategoriesController extends Controller
         ->orderBy('categories.created_at', 'DESC')
         ->orderBy('categories.name', 'DESC')
         ->withTrashed()
-        ->get();
+        ->get(); */
+
+        // To return The Count = RelationName_count
+        $categories = Category::withCount('products')->simplePaginate(5); 
 
         $title = 'Categories List';
 
@@ -95,18 +98,22 @@ class CategoriesController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category Created');
     }
 
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return $category->products()
+        ->with('category:id,name')
+        ->where('price', '<', 150 )
+        ->orderBy('price', 'Asc')
+        ->get();
     }
 
 
     public function edit($id)
     {
         $category = Category::find($id);
-        if (!$category) {
-            abort(404);
-        }
+        // if (!$category) {
+        //     abort(404);
+        // }
         
         $parents = Category::where('id', '<>', $category->id)->get();
         return view('admin.categories.edit', compact('category', 'parents'));

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProductsController extends Controller
 {
@@ -19,12 +23,17 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        // $data = DB::first();
+        // $this->authorize('viewAny', Product::class);
+        
+        // dd($data);
+        $user = Auth::user()->type; // 12
+        // dd($user);
+        if ($user == 'admin') {
+            $this->authorize('viewAny', Product::class);
+        }
 
-        $products = Product::join('categories', 'categories.id', '=', 'products.category_id')
-        ->select([
-            'products.*',
-            'categories.name as category_name',
-        ])
+        $products = Product::with('category.parent')
         // ->withoutGlobalScopes([ActiveStatusScope::class])
         ->paginate(5);
 
@@ -39,8 +48,15 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        // if (!Gate::allows('products.create')) {
+        //     abort(403);
+        // };
+
         $categories = Category::withTrashed()->get();
+
+        // $this->authorize('create', Product::class);
+
         $product = new Product;
         return view('admin.products.create', compact('categories', 'product'));
     }
@@ -73,6 +89,10 @@ class ProductsController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
+
+        return $product->ratings()->dd();
+        // $this->authorize('view', Product::class);
+
         return view('admin.products.show', compact('product'));
     }
 
@@ -85,6 +105,9 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $product = Product::withoutGlobalScope('active')->findOrFail($id);
+
+        // $this->authorize('products.update', Product::class);
+
         $categories = Category::withTrashed()->get();
         return view('admin.products.edit', compact('product', 'categories'));
     }
@@ -100,7 +123,7 @@ class ProductsController extends Controller
     {
         $product = Product::withoutGlobalScope('active')->findOrFail($id);
 
-        
+        $this->authorize('products.update', Product::class);
 
         $request->validate(Product::validateRules());
 
@@ -141,7 +164,19 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
+
+        $result = DB::table('cars')->delete();
+
+        dd($result);
+        // Gate::authorize('products.delete');
+
+        // $user = User::find(12); // ID 
+        // Gate::forUser($user)->denies('products.delete');
+
         $product = Product::withoutGlobalScope('active')->findOrFail($id);
+
+        // $this->authorize('products.delete', $product);
+
         $product->delete();
 
         // Storage::disk('uploads')->delete($product->image_path);

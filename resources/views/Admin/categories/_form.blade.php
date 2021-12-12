@@ -19,7 +19,7 @@
 <!-- Form -->
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-        <span class="input-group-text">Category Name</span>
+        <span class="input-group-text">{{ __('Category Name') }}</span>
     </div>
     <input type="name" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Enter Category Name" value="{{ old('name', $category->name) }}">
 
@@ -32,7 +32,7 @@
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-        <span class="input-group-text">Parent Name</span>
+        <span class="input-group-text">{{ __('Parent Name') }}</span>
     </div>
     <select class="form-control @error('parent_id') is-invalid @enderror" id="Parent" placeholder="Select Parent Name" name="parent_id">
         <option>No Parent</option>
@@ -51,7 +51,7 @@
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-        <span class="input-group-text">Description</span>
+        <span class="input-group-text">{{ __('Description') }}</span>
     </div>
     <textarea class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description', $category->description) }}</textarea>
 
@@ -64,7 +64,7 @@
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-        <span class="input-group-text">Image</span>
+        <span class="input-group-text">{{ __('Image') }}</span>
     </div>
     <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
 
@@ -76,7 +76,7 @@
 </div>
 
 <div class="form-group">
-    <label for="status">Status</label>
+    <label for="status">{{ __('Status') }}</label>
     <div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" id="status-active" value="active" @if ($category->status == 'active') checked @endif

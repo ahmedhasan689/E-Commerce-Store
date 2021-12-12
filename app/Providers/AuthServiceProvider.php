@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use App\Models\Role;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -25,14 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('products.create', function($user) {
-            return true;
-        });
+        Gate::before(function($user, $abilities) {
+            if ($user->type == 'super-admin') {
+                return true;
+            }
 
-        Gate::define('products.delete', function($user) {
-            
-        });
+            if ($user->type == 'user') {
+                return false;
+            }
 
+        });
 
     }
 }

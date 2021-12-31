@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProfilesController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Middleware\CheckUserType;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -87,7 +88,13 @@ Route::namespace('Admin')
 
     });
 
+Route::get('products', 'ProductsController@index')->name('products');
+Route::get('products/{slug}', 'ProductsController@show')->name('products.details');
 
 
 // Start Rating Route (Rating Model)  
 Route::post('ratings/{type}', [RatingsController::class, 'store'])->where('type', 'profile|product');
+
+// Start Cart Route ( CartController )
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart', [CartController::class, 'store']);

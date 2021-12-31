@@ -80,9 +80,10 @@
           </div>
           <div class="navigation__column center">
                 <ul class="main-menu menu">
-                  <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
+                  <li class="menu-item menu-item-has-children dropdown">
+                    <a href="{{ route('home') }}">Home</a>
                         <ul class="sub-menu">
-                          <li class="menu-item"><a href="index.html">Homepage #1</a></li>
+                          <li class="menu-item"><a href="#">Homepage #1</a></li>
                           <li class="menu-item"><a href="#">Homepage #2</a></li>
                           <li class="menu-item"><a href="#">Homepage #3</a></li>
                         </ul>
@@ -173,37 +174,13 @@
           <div class="navigation__column right">
             <form class="ps-search--header" action="do_action" method="post">
               <input class="form-control" type="text" placeholder="Search Product…">
-              <button><i class="ps-icon-search"></i></button>
+              <button>
+                <i class="ps-icon-search"></i>
+              </button>
             </form>
-            <div class="ps-cart"><a class="ps-cart__toggle" href="#"><span><i>20</i></span><i class="ps-icon-shopping-cart"></i></a>
-              <div class="ps-cart__listing">
-                <div class="ps-cart__content">
-                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="{{ asset('assets/front/images/cart-preview/1.jpg') }}" alt=""></div>
-                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">Amazin’ Glazin’</a>
-                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                    </div>
-                  </div>
-                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="{{ asset('assets/front/images/cart-preview/2.jpg') }}" alt=""></div>
-                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
-                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                    </div>
-                  </div>
-                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="{{ asset('assets/front/images/cart-preview/3.jpg') }}" alt=""></div>
-                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
-                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ps-cart__total">
-                  <p>Number of items:<span>36</span></p>
-                  <p>Item Total:<span>£528.00</span></p>
-                </div>
-                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
-              </div>
-            </div>
+
+            <x-cart-menu />
+            
             <div class="menu-toggle"><span></span></div>
           </div>
         </div>
@@ -217,6 +194,8 @@
       </div>
     </div>
     <main class="ps-main">
+
+        <x-alert />
 
         {{ $slot }}
       <!-- The Main Content -->
@@ -361,5 +340,6 @@
 <script type="text/javascript" src="{{ asset('assets/front/plugins/revolution/js/extensions/revolution.extension.actions.min.js') }}"></script>
     <!-- Custom scripts-->
     <script type="text/javascript" src="{{ asset('assets/front/js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/cart.js') }}"></script>
   </body>
 </html>

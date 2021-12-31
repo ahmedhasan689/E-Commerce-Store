@@ -48,7 +48,7 @@
                 <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30" data-radio="100%">
                     <div class="ps-masonry">
                         <div class="grid-sizer"></div>
-                        
+
                         @foreach ($products as $product)
                         <div class="grid-item kids">
                             <div class="grid-item__content-wrapper">
@@ -58,7 +58,7 @@
                                             <i class="ps-icon-heart"></i>
                                         </a>
                                         <img src="{{ asset('assets/front/images//shoe/8.jpg') }}" alt="">
-                                        <a class="ps-shoe__overlay" href="product-detail.html"></a>
+                                        <a class="ps-shoe__overlay" href="{{ route('products.details', $product->slug) }}"></a>
                                     </div>
                                     <div class="ps-shoe__content">
                                         <div class="ps-shoe__variants">
@@ -72,13 +72,11 @@
                                             </select>
                                         </div>
                                         <div class="ps-shoe__detail">
-                                            <a class="ps-shoe__name" href="#">
+                                            <a class="ps-shoe__name" href="{{ route ('products.details', $product->slug) }}">
                                                 {{ $product->name }}
                                             </a>
                                             <p class="ps-shoe__categories">
-                                                <a href="#">Men shoes</a>,
-                                                <a href="#"> Nike</a>,
-                                                <a href="#">Jordan</a>
+                                                {{ $product->category->name }}
                                             </p>
                                             <span class="ps-shoe__price"> £ {{ $product->price }}</span>
                                         </div>
@@ -89,6 +87,7 @@
                         @endforeach
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -169,143 +168,143 @@
                         <div class="ps-shoe">
                             <div class="ps-shoe__thumbnail">
                                 <div class="ps-badge"><span>New</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/1.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-shoes--carousel">
+                        <div class="ps-shoe">
+                            <div class="ps-shoe__thumbnail">
+                                <div class="ps-badge"><span>New</span></div>
+                                <div class="ps-badge ps-badge--sale ps-badge--2nd"><span>-35%</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price">
+                                        <del>£220</del> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-shoes--carousel">
+                        <div class="ps-shoe">
+                            <div class="ps-shoe__thumbnail">
+                                <div class="ps-badge"><span>New</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-shoes--carousel">
+                        <div class="ps-shoe">
+                            <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-shoes--carousel">
+                        <div class="ps-shoe">
+                            <div class="ps-shoe__thumbnail">
+                                <div class="ps-badge"><span>New</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-shoes--carousel">
+                        <div class="ps-shoe">
+                            <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/6.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                            </div>
+                            <div class="ps-shoe__content">
+                                <div class="ps-shoe__variants">
+                                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
+                                    <select class="ps-rating ps-shoe__rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
+                                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
+                                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="ps-shoe__content">
-            <div class="ps-shoe__variants">
-                <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                <select class="ps-rating ps-shoe__rating">
-                    <option value="1">1</option>
-                    <option value="1">2</option>
-                    <option value="1">3</option>
-                    <option value="1">4</option>
-                    <option value="2">5</option>
-                </select>
-            </div>
-            <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                        Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="ps-shoes--carousel">
-        <div class="ps-shoe">
-            <div class="ps-shoe__thumbnail">
-                <div class="ps-badge"><span>New</span></div>
-                <div class="ps-badge ps-badge--sale ps-badge--2nd"><span>-35%</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
-            </div>
-            <div class="ps-shoe__content">
-                <div class="ps-shoe__variants">
-                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                    <select class="ps-rating ps-shoe__rating">
-                        <option value="1">1</option>
-                        <option value="1">2</option>
-                        <option value="1">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p><span class="ps-shoe__price">
-                        <del>£220</del> £ 120</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ps-shoes--carousel">
-        <div class="ps-shoe">
-            <div class="ps-shoe__thumbnail">
-                <div class="ps-badge"><span>New</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
-            </div>
-            <div class="ps-shoe__content">
-                <div class="ps-shoe__variants">
-                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                    <select class="ps-rating ps-shoe__rating">
-                        <option value="1">1</option>
-                        <option value="1">2</option>
-                        <option value="1">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ps-shoes--carousel">
-        <div class="ps-shoe">
-            <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
-            </div>
-            <div class="ps-shoe__content">
-                <div class="ps-shoe__variants">
-                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                    <select class="ps-rating ps-shoe__rating">
-                        <option value="1">1</option>
-                        <option value="1">2</option>
-                        <option value="1">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ps-shoes--carousel">
-        <div class="ps-shoe">
-            <div class="ps-shoe__thumbnail">
-                <div class="ps-badge"><span>New</span></div><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
-            </div>
-            <div class="ps-shoe__content">
-                <div class="ps-shoe__variants">
-                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                    <select class="ps-rating ps-shoe__rating">
-                        <option value="1">1</option>
-                        <option value="1">2</option>
-                        <option value="1">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ps-shoes--carousel">
-        <div class="ps-shoe">
-            <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{ asset('assets/front/images/shoe/6.jpg') }}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
-            </div>
-            <div class="ps-shoe__content">
-                <div class="ps-shoe__variants">
-                    <div class="ps-shoe__variant normal"><img src="{{ asset('assets/front/images/shoe/2.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/3.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/4.jpg') }}" alt=""><img src="{{ asset('assets/front/images/shoe/5.jpg') }}" alt=""></div>
-                    <select class="ps-rating ps-shoe__rating">
-                        <option value="1">1</option>
-                        <option value="1">2</option>
-                        <option value="1">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div class="ps-shoe__detail"><a class="ps-shoe__name" href="product-detai.html">Air Jordan 7 Retro</a>
-                    <p class="ps-shoe__categories"><a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p><span class="ps-shoe__price"> £ 120</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
     <div class="ps-home-testimonial bg--parallax pb-80" data-background="{{ asset('assets/front/images/background/parallax.jpg') }}">
         <div class="container">

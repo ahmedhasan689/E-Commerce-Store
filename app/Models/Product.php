@@ -70,6 +70,16 @@ class Product extends Model
 
     }
 
+    protected $append = [
+        'image',
+        'Permalink',
+    ];
+
+    // Accessors For Url
+    public function getPermalinkAttribute() {
+        return route('products.details', $this->slug);
+    }
+
     // Accessors For Image_Path
     public function getImageAttribute()
     {

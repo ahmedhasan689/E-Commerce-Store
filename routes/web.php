@@ -7,9 +7,11 @@ use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingsController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Order;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,7 +77,7 @@ Route::namespace('Admin')
         Route::resource('/roles', 'Admin\RolesController')->middleware(['auth']);
         // End Role Controller
 
-        // Get User 
+        // Get User
         Route::get('/get-user', [HomeController::class, 'getUser']);
 
         // Start Country Route
@@ -92,9 +94,18 @@ Route::get('products', 'ProductsController@index')->name('products');
 Route::get('products/{slug}', 'ProductsController@show')->name('products.details');
 
 
-// Start Rating Route (Rating Model)  
+// Start Rating Route (Rating Model)
 Route::post('ratings/{type}', [RatingsController::class, 'store'])->where('type', 'profile|product');
 
 // Start Cart Route ( CartController )
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart', [CartController::class, 'store']);
+
+// Start CheckOut Route ( CartController )
+Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+// Start Orders Route ( CartController )
+Route::get('/orders', function() {
+    return Order::all();
+})->name('orders');

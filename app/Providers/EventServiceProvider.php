@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\OrderCreated;
 use App\Listeners\SendInvoiceListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         
-        'order.created' => [
+        OrderCreated::class => [
             SendInvoiceListener::class,
         ],
     ];

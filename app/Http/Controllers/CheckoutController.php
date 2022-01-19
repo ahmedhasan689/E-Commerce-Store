@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
 use App\Repositories\Cart\CartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +70,7 @@ class CheckoutController extends Controller
 
             DB::commit();
 
-            event('order.created');
+            event(new OrderCreated($order));
             
             return redirect()->route('orders')->with('success', __('Order Created'));
 

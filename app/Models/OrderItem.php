@@ -12,6 +12,8 @@ class OrderItem extends Pivot
 
     public $timestamps = false;  
 
+    protected $table = 'order_items';
+
     public function order()
     {
         return $this->belongsTo(Order::class);

@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MessageController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -109,3 +110,7 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/orders', function() {
     return Order::all();
 })->name('orders');
+
+// Chat 
+Route::get('chat', [MessageController::class, 'index'])->name('chat.index');
+Route::post('chat', [MessageController::class, 'store'])->name('chat.store');

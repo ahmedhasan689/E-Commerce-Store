@@ -12,9 +12,11 @@ use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl;
 use Symfony\Component\Intl\Languages;
 use Illuminate\Support\Facades\App;
+use App\Notifications\OrderCreatedNotification;
 // use Symfony\Component\Intl\Locales;
 
 use App\Models\Order;
+use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -69,6 +71,9 @@ class CheckoutController extends Controller
             DB::table('order_items')->insert($items);
 
             DB::commit();
+
+            // $user = User::where('type', 'super-admin')->first();
+            // $user->notify( new OrderCreatedNotification($order) );
 
             event(new OrderCreated($order));
             

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -36,6 +37,10 @@ Route::namespace('Admin')
     ->prefix('admin')
     ->middleware(['admin', 'auth.type:user'])
     ->group(function () {
+
+        // For Notifications
+        Route::get('notificatios', [NotificationsController::class, 'index'])->name('notification');
+        Route::get('notificatios/{id}', [NotificationsController::class, 'show'])->name('notifications.read');
 
         // Start Categories Controller ...
         Route::group([

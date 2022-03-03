@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\OrderCreatedNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'mobile',
     ];
 
     /**
@@ -40,10 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
 
-
-
-    public function hasAbility($abilities) {
+    public function hasAbility($abilities)
+    {
         $roles = Role::whereRaw('id IN (SELECT role_id FROM role_user WHERE user = ?)', [
             $this->id,
         ]);
@@ -57,7 +61,8 @@ class User extends Authenticatable
         return false;
     }
 
-    public function profile() {
+    public function profile()
+    {
         return $this->hasOne(Profile::class, 'user_id')->withDefault();
     }
 
@@ -84,16 +89,21 @@ class User extends Authenticatable
         );
     }
 
+    public function routeNotificationForMail($notification = null)
+    {
+        if ($notification instanceof OrderCreatedNotification){
+            return $this->email;
+        };
+        return $this->email;
+    }
 
+     public function routeNotificationForNexmo($notification = null)
+     {
+        return  $this->mobile;
+     }
 
-
-
-
-
-
-
-
-
-
-
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Notifications.' . $this->id;
+    }
 }

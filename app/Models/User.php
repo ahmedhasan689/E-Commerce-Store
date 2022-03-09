@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use App\Notifications\OrderCreatedNotification;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\OrderCreatedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
+    use HasApiTokens; // To Generate Token For API
 
     /**
      * The attributes that are mass assignable.

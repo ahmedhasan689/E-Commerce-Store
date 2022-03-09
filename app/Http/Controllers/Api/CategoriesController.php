@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Response;
@@ -35,6 +36,14 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::guard('sanctum')->user();
+
+        return $user;
+
+        if (!$request->user()->tokenCan('categories.create')){
+            abort(403, 'You Are Not Allowed !');
+        };
+
         $request->validate([
            'name' => 'required',
            'parent_id' => 'nullable|int|exists:categories,id',

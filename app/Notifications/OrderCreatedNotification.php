@@ -2,14 +2,21 @@
 
 namespace App\Notifications;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
+use NotificationChannels\Fcm\FcmChannel;
+use NotificationChannels\Fcm\FcmMessage;
+use Illuminate\Notifications\Notification;
+
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use NotificationChannels\Fcm\Resources\ApnsConfig;
 use Illuminate\Notifications\Messages\NexmoMessage;
-
-use App\Models\Order;
+use NotificationChannels\Fcm\Resources\AndroidConfig;
+use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
+use NotificationChannels\Fcm\Resources\AndroidNotification;
 
 class OrderCreatedNotification extends Notification
 {
@@ -44,7 +51,8 @@ class OrderCreatedNotification extends Notification
             'database',
             'mail',
             'broadcast',
-            'nexmo'
+            'nexmo',
+            FcmChannel::class,
         ];
 
         /* if ($notifiable->notify_sms) {
@@ -109,6 +117,16 @@ class OrderCreatedNotification extends Notification
         $message->content( 'A New Order Has Been Created (Order #:number).'  );
 
         return $message;
+    }
+
+    public function toFcm($notifiable)
+    {
+        return FcmMessage::create()
+            // ->setData(['data1' => 'value', 'data2' => 'value2'])
+            ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
+                ->setTitle('Account Activated')
+                ->setBody('Your account has been activated.')
+                ->setImage('http://example.com/url-to-image-here.png'));
     }
 
     /**

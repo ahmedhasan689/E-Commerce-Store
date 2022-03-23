@@ -51,7 +51,7 @@ class OrderCreatedNotification extends Notification
             'database',
             'mail',
             'broadcast',
-            'nexmo',
+            // 'nexmo',
             FcmChannel::class,
         ];
 
@@ -111,18 +111,20 @@ class OrderCreatedNotification extends Notification
         ]));
     }
 
-    public function toNexmo($notifiable)
-    {
-        $message = new NexmoMessage();
-        $message->content( 'A New Order Has Been Created (Order #:number).'  );
+    // public function toNexmo($notifiable)
+    // {
+    //     $message = new NexmoMessage();
+    //     $message->content( 'A New Order Has Been Created (Order #:number).'  );
 
-        return $message;
-    }
+    //     return $message;
+    // }
 
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
-            // ->setData(['data1' => 'value', 'data2' => 'value2'])
+            ->setData([
+                'order_id' => $this->order->id
+            ])
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
                 ->setTitle('Account Activated')
                 ->setBody('Your account has been activated.')

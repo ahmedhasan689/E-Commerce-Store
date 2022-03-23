@@ -128,7 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <!-- Notifications Dropdown Menu -->
-                
+
                 <x-notifications-menu />
 
                 <li class="nav-item">
@@ -246,7 +246,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             @yield('content')
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
             <!-- /.content -->
         </div>
@@ -281,8 +281,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootstrap 4 -->
     <script src="{{ asset ('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ asset ('assets/admin/js/adminlte.min.js') }}"></script>    
+    <script src="{{ asset ('assets/admin/js/adminlte.min.js') }}"></script>
     <script src="{{ asset ('js/app.js') }}"></script>
+    <script src="{{ asset ('js/firebase.js') }}"></script>
 </body>
 
 </html>

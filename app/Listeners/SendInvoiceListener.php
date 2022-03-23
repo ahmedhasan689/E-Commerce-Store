@@ -34,12 +34,14 @@ class SendInvoiceListener
         $order = $event->order;
 
         $users = User::whereIn('type', ['super-admin', 'admin'])->get();
-//        foreach ($users as $user) {
-//            $user->notify( new OrderCreatedNotification($order) );
-//        }
+        // foreach ($users as $user) {
+        // $user->notify( new OrderCreatedNotification($order) );
+        // }
         Notification::send($users,  new OrderCreatedNotification($order) );
-       /*  Notification::route('mail', 'hlhatab@gmail.com')->route('mail', 'admin@example.com')
-        ->route('nexmo', '+970'); */
+        /*
+        Notification::route('mail', 'hlhatab@gmail.com')->route('mail', 'admin@example.com')
+        ->route('nexmo', '+970');
+        */
 
         // Mail::to($order->billing_email)->send(new OrderInvoice($order));
     }

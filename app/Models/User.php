@@ -81,6 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class);
     }
 
+    public function deviceTokens()
+    {
+        return $this->hasMany(DeviceToken::class);
+    }
 
     public function roles()
     {
@@ -102,13 +106,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->email;
     }
 
-     public function routeNotificationForNexmo($notification = null)
-     {
-        return  $this->mobile;
-     }
+    public function routeNotificationForNexmo($notification = null)
+    {
+        return $this->mobile;
+    }
 
     public function receivesBroadcastNotificationsOn()
     {
         return 'Notifications.' . $this->id;
+    }
+
+    public function routeNotificationForFcm($notification = null)
+    {
+        return $this->deviceTokens()->pluck('token')->toArray();
     }
 }

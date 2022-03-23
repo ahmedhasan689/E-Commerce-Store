@@ -30,7 +30,9 @@ class OrderObserver
         // 20210001, 20210002, 20220003
         $now = Carbon::now();
         $number = Order::whereYear('created_at', '=', $now->year)->max('number');
+
         $order->number = $number ? $number + 1 : $now->year . '0001';
+
         if (!$order->shipping_name) {
             $order->shipping_name = $order->billing_name;
         }

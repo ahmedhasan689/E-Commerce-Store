@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "laravel/vonage-notification-channel": "^2.5",
+        "paypal/paypal-checkout-sdk": "^1.0",
         "pusher/pusher-php-server": "^7.0",
         "symfony/intl": "^5.4"
     },

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\SendEmailsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\NotificationsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -116,6 +118,14 @@ Route::get('/orders', function() {
     return Order::all();
 })->name('orders');
 
-// Chat 
+// Chat
 Route::get('chat', [MessageController::class, 'index'])->name('chat.index');
 Route::post('chat', [MessageController::class, 'store'])->name('chat.store');
+
+// Job
+Route::get('send-emails', [SendEmailsController::class, 'send']);
+
+// Paypal Routes
+Route::get('orders/{order}/payments/create', [PaymentsController::class, 'create'])->name('order.payments.create');
+Route::get('orders/{order}/payments/callback', [PaymentsController::class, 'callback'])->name('order.payments.return');
+Route::get('orders/{order}/payments/cancel',[PaymentsController::class, 'cancel'])->name('order.payments.cancel');

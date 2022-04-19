@@ -25,16 +25,16 @@ class ProductsController extends Controller
     {
         // $data = DB::first();
         // $this->authorize('viewAny', Product::class);
-        
+
         // dd($data);
         $user = Auth::user()->type; // 12
         // dd($user);
-        if ($user == 'admin') {
+        if ($user == 'admin' && $user == 'super-admin') {
             $this->authorize('viewAny', Product::class);
         }
 
         $products = Product::with('category.parent')
-        // ->withoutGlobalScopes([ActiveStatusScope::class])
+        ->withoutGlobalScopes([ActiveStatusScope::class])
         ->paginate(5);
 
         $success = session()->get('success');
@@ -48,7 +48,7 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         // if (!Gate::allows('products.create')) {
         //     abort(403);
         // };
@@ -75,7 +75,7 @@ class ProductsController extends Controller
             'slug' => Str::slug($request->post('name'))
         ]);
 
-        $product = Product::create($request->all()); 
+        $product = Product::create($request->all());
 
         return redirect()->route('products.index')->with('success', 'Product ($product->name) Created');
     }
@@ -138,15 +138,15 @@ class ProductsController extends Controller
 
         // Image Upload
         if ($request->hasFile('image')) {
-            $file = $request->file('image'); // UploadedFile Objects 
+            $file = $request->file('image'); // UploadedFile Objects
 
             $image_path = $file->store('/', [
                 'disk' => 'uploads',
             ]);
             $request->merge([
                 'image_path' => $image_path,
-            ]); 
-            
+            ]);
+
         }
 
 
@@ -165,15 +165,15 @@ class ProductsController extends Controller
     public function destroy($id)
     {
 
-        $result = DB::table('cars')->delete();
+        // $result = DB::table('products')->delete();
 
-        dd($result);
+        // dd($result);
         // Gate::authorize('products.delete');
 
-        // $user = User::find(12); // ID 
+        // $user = User::find(12); // ID
         // Gate::forUser($user)->denies('products.delete');
 
-        $product = Product::withoutGlobalScope('active')->findOrFail($id);
+        $product = Product::findOrFail($id);
 
         // $this->authorize('products.delete', $product);
 
@@ -186,18 +186,18 @@ class ProductsController extends Controller
 
     }
 
-    public function trash() 
+    public function trash()
     {
         $products = Product::withoutGlobalScope('active')->onlyTrashed()->paginate(5);
         return view('admin.products.trash', compact('products'));
     }
 
-    public function restore(Request $request, $id = null) 
+    public function restore(Request $request, $id = null)
     {
         if ($id) {
             $product = Product::withoutGlobalScope('active')->onlyTrashed()->findOrFail($id);
-            $product->restore();   
-    
+            $product->restore();
+
             return redirect()->route('products.index')->with('success', 'Product ' . ($product->name) .  ' Restored');
         }
 
@@ -205,12 +205,12 @@ class ProductsController extends Controller
         return redirect()->route('products.index')->with('success', 'All Trashed Product Restored');
     }
 
-    public function forceDelete($id = null) 
+    public function forceDelete($id = null)
     {
         if ($id) {
             $product = Product::onlyTrashed()->findOrFail($id);
-            $product->forceDelete();   
-    
+            $product->forceDelete();
+
             return redirect()->route('products.index')->with('success', 'Product ' . ($product->name) .  ' Deleted');
         }
 

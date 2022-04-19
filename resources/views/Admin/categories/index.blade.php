@@ -18,12 +18,6 @@
 
     {{ trans_choice('app.categories_count', $categories->count(), ['number' => $categories->count()]) }}
 
-    @if ($success)
-    <div class="alert alert-danger">
-        {{ $success }}
-    </div>
-    @endif
- 
     <table class="table table-hover">
         <thead>
             <tr>
@@ -32,7 +26,7 @@
                 <th>{{ trans('Name') }}</th>
                 <th>{{ Lang::get('Slug') }}</th>
                 <th>@lang('Parent ID')</th>
-                <th>{{ __('Parent Count') }}</th>
+                <th>{{ __('Products Count') }}</th>
                 <th>{{ __('Status') }}</th>
                 <th>{{ __('Created At') }}</th>
             </tr>
@@ -51,7 +45,7 @@
                 <td>
                     <a href="{{ route('categories.edit', ['id' => $category->id]) }}">
                         <button type="submit" class="btn btn-sm btn-success">{{ __('app.Edit')}}</button>
-                    </a>                    
+                    </a>
                 </td>
                 <td>
                     <form action="{{ route('categories.destroy', $category->id)}}" method="POST">

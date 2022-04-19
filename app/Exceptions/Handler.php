@@ -2,7 +2,14 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -35,7 +42,41 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+           // Notification::send();
+           // You Can Insert Into Database
+
+           // return false;
+        });
+
+        $this->renderable(function (Throwable $e) {
+            if ($e instanceof QueryException) {
+                return redirect()->back()->with('success', $e->getMessage());
+            }
+        });
+
+        $this->renderable(function (AuthenticationException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return new JsonResponse([
+                    'message' => 'You Must Login !'
+                ], 401);
+            }
+        });
+
+        $this->renderable(function (NotFoundHttpException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return new JsonResponse([
+                    'message' => 'Not Found !'
+                ], 404);
+            }
+        });
+
+        $this->renderable(function (ValidationException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return new JsonResponse([
+                    'message' => 'Validation Error !',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
         });
     }
 }

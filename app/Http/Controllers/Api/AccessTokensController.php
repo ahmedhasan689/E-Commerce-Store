@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +49,10 @@ class AccessTokensController extends Controller
         //     'ip' => $request->ip(),
         // ])->save();
 
+        Log::info('User ' . $user->name . ' Logged in from ' . $request->ip() , [
+            'ip' => $request->ip(),
+            'device' => $request->device_name,
+        ]);
 
         return Response::json([
             'token' => $token->plainTextToken,

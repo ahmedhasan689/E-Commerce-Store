@@ -10,13 +10,13 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, $abilities) 
+    public function before(User $user, $abilities)
     {
-        if ($user->type == 'super-admin'){
+        if ($user->type == 'super-admin' && $user->type == 'admin'){
             return true;
         }
     }
-    
+
     /**
      * Determine whether the user can view any models.
      *

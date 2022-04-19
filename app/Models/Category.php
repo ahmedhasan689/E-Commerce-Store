@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -23,15 +23,15 @@ class Category extends Model
     // Accessors [Exists Attribute, Non-Exists Attribute]
 
         //Exists Attribute get{Attribute-name}Attribute
-    public function getNameAttribute($value)
-    {
-        if ($this->trashed()) {
-            return $value . '(Deleted)';
-        }
-        return $value;
-    }
+    // public function getNameAttribute($value)
+    // {
+    //     if ($this->trashed()) {
+    //         return $value . '(Deleted)';
+    //     }
+    //     return $value;
+    // }
 
-        //Non-Exists Attribute
+        // Non-Exists Attribute
     public function getOriginalNameAttribute()
     {
         return $this->attributes['name'];

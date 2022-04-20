@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\SendEmailsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ConfigsController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\CartController;
@@ -95,6 +96,12 @@ Route::namespace('Admin')
         // Start Profile Route
         Route::get('/profiles/{profiles}', [ProfilesController::class, 'show']);
         // End Profile Route
+
+        // Start Settings Route
+        Route::get('settings', [ConfigsController::class, 'create'])->name('settings');
+        Route::post('settings', [ConfigsController::class, 'store']);
+        Route::post('settings/clear', [ConfigsController::class, 'clearCache'])->name('clear');
+        // End Settings Route
 
     });
 

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Config;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -56,7 +58,17 @@ class AppServiceProvider extends ServiceProvider
         }, 'Some Words Are Not Allowed !');
 
         // To Use Bootstrap Not Tailwindcss
-
         Paginator::useBootstrap();
+
+        $settings = Cache::get('app-settings');
+
+        if (!$settings) {
+            $settings = Config::all();
+            Cache::put('app-settings', $settings);
+        }
+
+        foreach ($settings as $config) {
+            config()->set($config->name, $config->value);
+        }
     }
 }

@@ -36,20 +36,20 @@ class Product extends Model
         'status',
     ];
 
-    protected static function booted() 
+    protected static function booted()
     {
-        // static::addGlobalScope(new ActiveStatusScope());
+        static::addGlobalScope(new ActiveStatusScope());
 
-        // static::addGlobalScope('owner', function (Builder $builder) {
-        //     $user = Auth::user();
-        //     if ($user && $user->type == 'store') {
-        //         $builder->where('products.user_id', '=', $user->id);
-        //     }
-        // });
+        static::addGlobalScope('owner', function (Builder $builder) {
+            $user = Auth::user();
+            if ($user && $user->type == 'store') {
+                $builder->where('products.user_id', '=', $user->id);
+            }
+        });
     }
 
 
-    
+
     public static function validateRules()
     {
         return [
@@ -92,10 +92,10 @@ class Product extends Model
         }
 
         return asset('uploads/' . $this->image_path);
-    }  
+    }
 
     // Mutators
-    public function setNameAttribute($value) 
+    public function setNameAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value);
         $this->attributes['name'] = Str::title($value);
